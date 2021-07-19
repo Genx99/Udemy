@@ -1,45 +1,49 @@
-"use strict";
+'use strict';
 
-let num = Math.trunc(Math.random() * 20) + 1;
+let num;
 
-document.querySelector(".check").addEventListener("click", function () {
-  const inpNum = Number(document.querySelector(".guess").value);
+function changeMessage(str) {
+  document.querySelector('.message').textContent = str;
+}
 
+function aleaNum() {
+  num = Math.trunc(Math.random() * 20) + 1;
+}
+
+aleaNum();
+
+document.querySelector('.check').addEventListener('click', function () {
+  const inpNum = Number(document.querySelector('.guess').value);
   if (!inpNum || inpNum < 0 || inpNum > 20) {
-    document.querySelector(".message").textContent =
-      "❌ Caracter incorrecto ❌";
+    changeMessage('❌ Caracter incorrecto ❌');
   } else if (inpNum === num) {
-    document.querySelector(".message").textContent = "💋 Adivinaste 💋";
+    changeMessage('💋 Adivinaste 💋');
     if (
-      Number(document.querySelector(".score").textContent) >
-      Number(document.querySelector(".highscore").textContent)
+      Number(document.querySelector('.score').textContent) >
+      Number(document.querySelector('.highscore').textContent)
     ) {
-      document.querySelector(".highscore").textContent =
-        document.querySelector(".score").textContent;
-      document.querySelector(".number").textContent = num;
+      document.querySelector('.highscore').textContent =
+        document.querySelector('.score').textContent;
     }
-    document.querySelector("body").style.backgroundColor = "#60b347";
-  } else if (inpNum > num) {
-    document.querySelector(".message").textContent = "😥 Mas bajo bichi 😥";
-    if (Number(document.querySelector(".score").textContent) > 0) {
-      document.querySelector(".score").textContent =
-        Number(document.querySelector(".score").textContent) - 1;
-    }
-  } else if (inpNum < num) {
-    document.querySelector(".message").textContent = "😥 Mas alto bichi 😥";
-    if (Number(document.querySelector(".score").textContent) > 0) {
-      document.querySelector(".score").textContent =
-        Number(document.querySelector(".score").textContent) - 1;
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.number').textContent = num;
+  } else if (inpNum !== num) {
+    changeMessage(
+      inpNum > num ? '😥 Mas bajo bichi 😥' : '😥 Mas alto bichi 😥'
+    );
+
+    if (Number(document.querySelector('.score').textContent) > 0) {
+      document.querySelector('.score').textContent =
+        Number(document.querySelector('.score').textContent) - 1;
     }
   }
 });
 
-document.querySelector(".again").addEventListener("click", function () {
-  num = Math.trunc(Math.random() * 20) + 1;
-  document.querySelector(".score").textContent = "20";
-  document.querySelector(".guess").value = "";
-  document.querySelector(".number").textContent = "?";
-  document.querySelector(".message").textContent = "Pone un numero bichita";
-  console.log(num);
-  document.querySelector("body").style.backgroundColor = "#222";
+document.querySelector('.again').addEventListener('click', function () {
+  aleaNum();
+  document.querySelector('.score').textContent = '20';
+  document.querySelector('.guess').value = '';
+  document.querySelector('.number').textContent = '?';
+  changeMessage('Pone un numero bichita');
+  document.querySelector('body').style.backgroundColor = '#222';
 });
